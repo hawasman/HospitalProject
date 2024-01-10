@@ -1,35 +1,48 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Layout, theme } from "antd";
+import Sidebar from "./components/Sidebar";
+import { Outlet } from "react-router-dom";
 
-function App() {
-  const [count, setCount] = useState(0)
+const { Header, Content, Footer } = Layout;
 
+const App = () => {
+  const {
+    token: { colorBgContainer, borderRadiusLG },
+  } = theme.useToken();
+
+  const HeaderStyle = { background: colorBgContainer };
+  const ContentStyle = {
+    padding: 24,
+    minHeight: 360,
+    height: '100%',
+    background: colorBgContainer,
+    borderRadius: borderRadiusLG,
+  };
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Layout style={layoutStyle}>
+        <Sidebar />
+        <Layout>
+          <Header style={HeaderStyle} >
+            تطبيق ادارة المستشفى
+          </Header>
+          <Content style={{ margin: "24px 16px 0" }}>
+            <div style={ContentStyle}>
+              <Outlet />
+            </div>
+          </Content>
+          <Footer style={{ textAlign: "center" }}>
+            Ant Design ©{new Date().getFullYear()} Created by Ant UED
+          </Footer>
+        </Layout>
+      </Layout>
     </>
-  )
-}
+  );
+};
 
-export default App
+const layoutStyle = {
+  borderRadius: 8,
+  overflow: "hidden",
+  width: "100%",
+  height: "100vh",
+};
+export default App;
