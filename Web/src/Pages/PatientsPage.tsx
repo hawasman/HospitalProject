@@ -1,70 +1,23 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import type { TableProps } from "antd";
-import { Button, Space, Table } from "antd";
-import type {
-  ColumnsType,
-  // FilterValue,
-  SorterResult,
-} from "antd/es/table/interface";
+import { Button, Table, Tooltip } from "antd";
+import type { ColumnsType, SorterResult } from "antd/es/table/interface";
+import { InfoOutlined } from "@ant-design/icons";
 import { Patient } from "../interfaces";
 import moment from "moment";
 import axios from "axios";
-
-// const data: Patient[] = [
-//   {
-//     id: 1,
-//     fullNameArabic: "محمد الطيب",
-//     gender: "ذكر",
-//     nationality: "سوداني",
-//     birthDate: new Date(),
-//     socialState: "متزوج",
-//     religion: "مسلم",
-//     nationalId: "asdasdasf",
-//     activeField: true,
-//   },
-//   {
-//     id: 2,
-//     fullNameArabic: "خالد علي",
-//     gender: "ذكر",
-//     nationality: "سعودي",
-//     birthDate: new Date(),
-//     socialState: "اعزب",
-//     religion: "مسلم",
-//     nationalId: "23424124124",
-//     activeField: false,
-//   },
-//   {
-//     id: 3,
-//     fullNameArabic: "فاطمة صبر",
-//     gender: "انثئ",
-//     nationality: "مصر",
-//     birthDate: new Date(),
-//     socialState: "اعزب",
-//     religion: "مسلم",
-//     nationalId: "90408673",
-//     activeField: true,
-//   },
-//   {
-//     id: 4,
-//     fullNameArabic: "بكرام خان",
-//     gender: "ذكر",
-//     nationality: "الهند",
-//     birthDate: new Date(),
-//     socialState: "اعزب",
-//     religion: "مسلم",
-//     nationalId: "9947625555",
-//     activeField: true,
-//   },
-// ];
+import { useNavigate } from "react-router-dom";
+import { Gender } from "../Utils/Enums";
 
 const PatientsPage = () => {
-  
-  const [data , setData] = useState<Patient[]>([]);
-  
+  const [data, setData] = useState<Patient[]>([]);
+
   useEffect(() => {
-    axios.get<Patient[]>("https://localhost:7197/api/Patients").then((res) => setData(res.data))
-  })
-  
+    axios
+      .get<Patient[]>("https://localhost:7197/api/Patients")
+      .then((res) => setData(res.data));
+  },[]);
+
   const [sortedInfo, setSortedInfo] = useState<SorterResult<Patient>>({});
 
   const handleChange: TableProps<Patient>["onChange"] = (
@@ -73,25 +26,14 @@ const PatientsPage = () => {
     sorter
   ) => {
     console.log("Various parameters", pagination, filters, sorter);
-    // setFilteredInfo(filters);
     setSortedInfo(sorter as SorterResult<Patient>);
   };
 
-  const clearFilters = () => {
-    // setFilteredInfo({});
+  const handleView = (id: number) => {
+    navigate(`${id}`);
   };
 
-  const clearAll = () => {
-    // setFilteredInfo({});
-    setSortedInfo({});
-  };
-
-  const setAgeSort = () => {
-    setSortedInfo({
-      order: "descend",
-      columnKey: "gender",
-    });
-  };
+  const navigate = useNavigate();
 
   const columns: ColumnsType<Patient> = [
     {
@@ -107,9 +49,10 @@ const PatientsPage = () => {
       title: "الجنس",
       dataIndex: "gender",
       key: "gender",
-      sorter: (a, b) => a.gender.length - b.gender.length,
-      sortOrder: sortedInfo.columnKey === "gender" ? sortedInfo.order : null,
-      ellipsis: true,
+      render: (value: Gender) => Gender[value],
+      // sorter: (a, b) => a.gender.length - b.gender.length,
+      // sortOrder: sortedInfo.columnKey === "gender" ? sortedInfo.order : null,
+      // ellipsis: true,
     },
     {
       title: "الجنسية",
@@ -126,26 +69,25 @@ const PatientsPage = () => {
       key: "birthDate",
       sorter: (a, b) => moment(a.birthDate).unix() - moment(b.birthDate).unix(),
       sortOrder: sortedInfo.columnKey === "birthDate" ? sortedInfo.order : null,
-      render: ((date:string) => moment(date).format("DD-MM-YYYY")),
+      render: (date: string) => moment(date).format("DD-MM-YYYY"),
       ellipsis: true,
     },
     {
       title: "الحالة الاجتماعية",
       dataIndex: "socialState",
       key: "socialState",
-      sorter: (a, b) => a.socialState.length - b.socialState.length,
-      sortOrder:
-        sortedInfo.columnKey === "socialState" ? sortedInfo.order : null,
-      ellipsis: true,
+      // sorter: (a, b) => a.socialState.length - b.socialState.length,
+      // sortOrder:
+      //   sortedInfo.columnKey === "socialState" ? sortedInfo.order : null,
+      // ellipsis: true,
     },
     {
       title: "الديانة",
       dataIndex: "religion",
       key: "religion",
-      sorter: (a, b) => a.religion.length - b.religion.length,
-      sortOrder:
-        sortedInfo.columnKey === "religion" ? sortedInfo.order : null,
-      ellipsis: true,
+      // sorter: (a, b) => a.religion.length - b.religion.length,
+      // sortOrder: sortedInfo.columnKey === "religion" ? sortedInfo.order : null,
+      // ellipsis: true,
     },
     {
       title: "رقم الهوية",
@@ -161,16 +103,31 @@ const PatientsPage = () => {
       dataIndex: "activeField",
       key: "activeField",
       ellipsis: true,
-      render: (value: boolean) => value == true ? "نشط" : "غير نشط",
+      render: (value: boolean) => (value == true ? "نشط" : "غير نشط"),
+    },
+    {
+      title: "",
+      dataIndex: "id",
+      key: "x",
+      render: (value) => {
+        return (
+          <>
+            <Tooltip title="معلوات المريض">
+              <Button
+                onClick={() => handleView(value)}
+                type="primary"
+                shape="circle"
+                icon={<InfoOutlined />}
+              />
+            </Tooltip>
+          </>
+        );
+      },
     },
   ];
+
   return (
     <>
-      <Space style={{ marginBottom: 16 }}>
-        <Button onClick={setAgeSort}>Sort age</Button>
-        <Button onClick={clearFilters}>Clear filters</Button>
-        <Button onClick={clearAll}>Clear filters and sorters</Button>
-      </Space>
       <Table columns={columns} dataSource={data} onChange={handleChange} />
     </>
   );

@@ -3,6 +3,7 @@ import App from "../App";
 import HomePage from "../Pages/HomePage";
 import PatientsPage from "../Pages/PatientsPage";
 import ErrorPage from "../error-page";
+import PatientViewPage from "../Pages/Patients/PatientViewPage";
 
 export const router = createBrowserRouter([
   {
@@ -12,6 +13,7 @@ export const router = createBrowserRouter([
     children: [
       { path: "", element: <HomePage /> },
       { path: "patients", element: <PatientsPage /> },
+      { path: "patients/:id", element: <PatientViewPage /> },
     ],
   },
 ]);

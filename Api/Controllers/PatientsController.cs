@@ -33,12 +33,12 @@ namespace Api.Controllers
         public async Task<ActionResult<Patient>> GetPatient(int id)
         {
             var patient = await _context.Patients.FindAsync(id);
-
             if (patient == null)
             {
                 return NotFound();
             }
-
+            var contactInfo = await _context.ContactInfos.FindAsync(patient.ContactInfoId);
+            patient.ContactInfo = contactInfo;
             return patient;
         }
 

@@ -1,4 +1,3 @@
-using System.Globalization;
 using Api.Helpers;
 
 namespace Api.Models;
@@ -14,7 +13,9 @@ public class Patient : BaseModel
     public required string Religion { get; set; }
     public required string NationalId { get; set; }
     public string? Job { get; set; }
+    public int? ContactInfoId { get; set; }
     public ContactInfo? ContactInfo { get; set; }
+    public int? FinancialInfoId { get; set; }
     public FinancialInfo? FinancialInfo { get; set; }
     public ICollection<Attachment>? Attachments { get; set; }
     public MedicalFile? MedicalFile { get; set; }

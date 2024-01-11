@@ -9,7 +9,7 @@ export interface Patient {
     birthDate: Date
     nationality: string
     gender: string
-    socialState: string
+    socialState: number
     religion: string
     nationalId: string
     job?: string
