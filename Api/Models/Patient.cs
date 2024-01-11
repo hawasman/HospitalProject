@@ -9,8 +9,8 @@ public class Patient : BaseModel
     public required string FullNameArabic { get; set; }
     public required DateTime BirthDate { get; set;  }
     public required string Nationality { get; set; }
-    public required string Gender { get; set; }
-    public required string SocialState { get; set; }
+    public required Gender Gender { get; set; }
+    public required SocialState SocialState { get; set; }
     public required string Religion { get; set; }
     public required string NationalId { get; set; }
     public string? Job { get; set; }

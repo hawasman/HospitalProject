@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import type { TableProps } from "antd";
 import { Button, Space, Table } from "antd";
 import type {
@@ -8,58 +8,63 @@ import type {
 } from "antd/es/table/interface";
 import { Patient } from "../interfaces";
 import moment from "moment";
+import axios from "axios";
 
-const data: Patient[] = [
-  {
-    id: 1,
-    fullNameArabic: "محمد الطيب",
-    gender: "ذكر",
-    nationality: "سوداني",
-    birthDate: new Date(),
-    socialState: "متزوج",
-    religion: "مسلم",
-    nationalId: "asdasdasf",
-    activeField: true,
-  },
-  {
-    id: 2,
-    fullNameArabic: "خالد علي",
-    gender: "ذكر",
-    nationality: "سعودي",
-    birthDate: new Date(),
-    socialState: "اعزب",
-    religion: "مسلم",
-    nationalId: "23424124124",
-    activeField: false,
-  },
-  {
-    id: 3,
-    fullNameArabic: "فاطمة صبر",
-    gender: "انثئ",
-    nationality: "مصر",
-    birthDate: new Date(),
-    socialState: "اعزب",
-    religion: "مسلم",
-    nationalId: "90408673",
-    activeField: true,
-  },
-  {
-    id: 4,
-    fullNameArabic: "بكرام خان",
-    gender: "ذكر",
-    nationality: "الهند",
-    birthDate: new Date(),
-    socialState: "اعزب",
-    religion: "مسلم",
-    nationalId: "9947625555",
-    activeField: true,
-  },
-];
+// const data: Patient[] = [
+//   {
+//     id: 1,
+//     fullNameArabic: "محمد الطيب",
+//     gender: "ذكر",
+//     nationality: "سوداني",
+//     birthDate: new Date(),
+//     socialState: "متزوج",
+//     religion: "مسلم",
+//     nationalId: "asdasdasf",
+//     activeField: true,
+//   },
+//   {
+//     id: 2,
+//     fullNameArabic: "خالد علي",
+//     gender: "ذكر",
+//     nationality: "سعودي",
+//     birthDate: new Date(),
+//     socialState: "اعزب",
+//     religion: "مسلم",
+//     nationalId: "23424124124",
+//     activeField: false,
+//   },
+//   {
+//     id: 3,
+//     fullNameArabic: "فاطمة صبر",
+//     gender: "انثئ",
+//     nationality: "مصر",
+//     birthDate: new Date(),
+//     socialState: "اعزب",
+//     religion: "مسلم",
+//     nationalId: "90408673",
+//     activeField: true,
+//   },
+//   {
+//     id: 4,
+//     fullNameArabic: "بكرام خان",
+//     gender: "ذكر",
+//     nationality: "الهند",
+//     birthDate: new Date(),
+//     socialState: "اعزب",
+//     religion: "مسلم",
+//     nationalId: "9947625555",
+//     activeField: true,
+//   },
+// ];
 
 const PatientsPage = () => {
-  // const [filteredInfo, setFilteredInfo] = useState<
-  //   Record<string, FilterValue | null>
-  // >({});
+  
+  const [data , setData] = useState<Patient[]>([]);
+  
+  useEffect(() => {
+    axios.get<Patient[]>("https://localhost:7197/api/Patients").then((res) => setData(res.data))
+  })
+  
   const [sortedInfo, setSortedInfo] = useState<SorterResult<Patient>>({});
 
   const handleChange: TableProps<Patient>["onChange"] = (

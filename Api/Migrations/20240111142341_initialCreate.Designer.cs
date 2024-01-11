@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240110174251_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240111142341_initialCreate")]
+    partial class initialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -70,7 +70,7 @@ namespace Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ContactInfo");
+                    b.ToTable("ContactInfos");
                 });
 
             modelBuilder.Entity("Api.Helpers.FinancialInfo", b =>
@@ -128,7 +128,7 @@ namespace Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FinancialInfo");
+                    b.ToTable("FinancialInfos");
                 });
 
             modelBuilder.Entity("Api.Models.Attachment", b =>
@@ -328,9 +328,8 @@ namespace Api.Migrations
                     b.Property<string>("FullNameEnglish")
                         .HasColumnType("text");
 
-                    b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Gender")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Job")
                         .HasColumnType("text");
@@ -347,9 +346,8 @@ namespace Api.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("SocialState")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("SocialState")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAddOrUpdate()

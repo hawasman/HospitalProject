@@ -7,13 +7,13 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Api.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class initialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "ContactInfo",
+                name: "ContactInfos",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -31,7 +31,7 @@ namespace Api.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ContactInfo", x => x.Id);
+                    table.PrimaryKey("PK_ContactInfos", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -57,7 +57,7 @@ namespace Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "FinancialInfo",
+                name: "FinancialInfos",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -79,7 +79,7 @@ namespace Api.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FinancialInfo", x => x.Id);
+                    table.PrimaryKey("PK_FinancialInfos", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -92,8 +92,8 @@ namespace Api.Migrations
                     FullNameArabic = table.Column<string>(type: "text", nullable: false),
                     BirthDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Nationality = table.Column<string>(type: "text", nullable: false),
-                    Gender = table.Column<string>(type: "text", nullable: false),
-                    SocialState = table.Column<string>(type: "text", nullable: false),
+                    Gender = table.Column<int>(type: "integer", nullable: false),
+                    SocialState = table.Column<int>(type: "integer", nullable: false),
                     Religion = table.Column<string>(type: "text", nullable: false),
                     NationalId = table.Column<string>(type: "text", nullable: false),
                     Job = table.Column<string>(type: "text", nullable: true),
@@ -108,14 +108,14 @@ namespace Api.Migrations
                 {
                     table.PrimaryKey("PK_Patients", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Patients_ContactInfo_ContactInfoId",
+                        name: "FK_Patients_ContactInfos_ContactInfoId",
                         column: x => x.ContactInfoId,
-                        principalTable: "ContactInfo",
+                        principalTable: "ContactInfos",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Patients_FinancialInfo_FinancialInfoId",
+                        name: "FK_Patients_FinancialInfos_FinancialInfoId",
                         column: x => x.FinancialInfoId,
-                        principalTable: "FinancialInfo",
+                        principalTable: "FinancialInfos",
                         principalColumn: "Id");
                 });
 
@@ -267,10 +267,10 @@ namespace Api.Migrations
                 name: "Patients");
 
             migrationBuilder.DropTable(
-                name: "ContactInfo");
+                name: "ContactInfos");
 
             migrationBuilder.DropTable(
-                name: "FinancialInfo");
+                name: "FinancialInfos");
         }
     }
 }
