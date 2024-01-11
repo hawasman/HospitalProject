@@ -1,11 +1,14 @@
 import { Menu, MenuProps } from "antd";
 import {
-  AppstoreOutlined,
-  MailOutlined,
+  WalletOutlined,
+  TeamOutlined,
   SettingOutlined,
+  HomeOutlined,
+  AreaChartOutlined
 } from "@ant-design/icons";
 import Sider from "antd/es/layout/Sider";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -26,20 +29,22 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-  getItem("الرئيسية", "", <MailOutlined />),
-  getItem("المرضى", "sub1", <MailOutlined />, [
+  getItem("الرئيسية", "", <HomeOutlined />),
+  getItem("المرضى", "sub1", <TeamOutlined />, [
     getItem("معلومات المريض", "patients"),
   ]),
 
-  getItem("المالية", "sub2", <AppstoreOutlined />, [
+  getItem("المالية", "sub2",<WalletOutlined />, [
     getItem("Option 5", "5"),
     getItem("Option 6", "6"),
   ]),
 
-  getItem("التقارير", "sub3", <SettingOutlined />, [getItem("Option 9", "9")]),
+  getItem("التقارير", "sub3", <AreaChartOutlined />, [getItem("Option 9", "9")]),
+  getItem("الاعدادات", "settings", <SettingOutlined />),
 ];
 
 const Sidebar = () => {
+  const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
   const onClick: MenuProps["onClick"] = (e) => {
     navigate(e.key);
@@ -48,14 +53,7 @@ const Sidebar = () => {
   return (
     <>
       <Sider
-        breakpoint="lg"
-        collapsedWidth="0"
-        onBreakpoint={(broken) => {
-          console.log(broken);
-        }}
-        onCollapse={(collapsed, type) => {
-          console.log(collapsed, type);
-        }}
+       collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}
       >
         <Menu
           onClick={onClick}

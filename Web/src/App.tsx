@@ -13,13 +13,13 @@ const App = () => {
   const ContentStyle = {
     padding: 24,
     minHeight: 360,
-    height: '100%',
+    height: "100%",
     background: colorBgContainer,
     borderRadius: borderRadiusLG,
   };
   return (
     <>
-      <Layout style={layoutStyle}>
+      <Layout style={{ minHeight: '100vh' }}>
         <Sidebar />
         <Layout>
           <Header style={HeaderStyle} >
@@ -27,8 +27,8 @@ const App = () => {
           </Header>
           <Content style={{ margin: "24px 16px 0" }}>
             <div style={ContentStyle}>
-              <Outlet />
-            </div>
+          <Outlet />
+          </div>
           </Content>
           <Footer style={{ textAlign: "center" }}>
             Hospital Project ©{new Date().getFullYear()}
@@ -39,10 +39,4 @@ const App = () => {
   );
 };
 
-const layoutStyle = {
-  borderRadius: 8,
-  overflow: "hidden",
-  width: "100%",
-  height: "100vh",
-};
 export default App;

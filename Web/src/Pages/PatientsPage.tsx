@@ -7,7 +7,7 @@ import { Patient } from "../interfaces";
 import moment from "moment";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Gender } from "../Utils/Enums";
+import { Gender, SocialState } from "../Utils/Enums";
 
 const PatientsPage = () => {
   const [data, setData] = useState<Patient[]>([]);
@@ -16,7 +16,7 @@ const PatientsPage = () => {
     axios
       .get<Patient[]>("https://localhost:7197/api/Patients")
       .then((res) => setData(res.data));
-  },[]);
+  }, []);
 
   const [sortedInfo, setSortedInfo] = useState<SorterResult<Patient>>({});
 
@@ -50,9 +50,6 @@ const PatientsPage = () => {
       dataIndex: "gender",
       key: "gender",
       render: (value: Gender) => Gender[value],
-      // sorter: (a, b) => a.gender.length - b.gender.length,
-      // sortOrder: sortedInfo.columnKey === "gender" ? sortedInfo.order : null,
-      // ellipsis: true,
     },
     {
       title: "الجنسية",
@@ -76,18 +73,12 @@ const PatientsPage = () => {
       title: "الحالة الاجتماعية",
       dataIndex: "socialState",
       key: "socialState",
-      // sorter: (a, b) => a.socialState.length - b.socialState.length,
-      // sortOrder:
-      //   sortedInfo.columnKey === "socialState" ? sortedInfo.order : null,
-      // ellipsis: true,
+      render: (value) => SocialState[value],
     },
     {
       title: "الديانة",
       dataIndex: "religion",
       key: "religion",
-      // sorter: (a, b) => a.religion.length - b.religion.length,
-      // sortOrder: sortedInfo.columnKey === "religion" ? sortedInfo.order : null,
-      // ellipsis: true,
     },
     {
       title: "رقم الهوية",
@@ -128,6 +119,8 @@ const PatientsPage = () => {
 
   return (
     <>
+      <h3>قائمة المرضى</h3>
+      <br />
       <Table columns={columns} dataSource={data} onChange={handleChange} />
     </>
   );
