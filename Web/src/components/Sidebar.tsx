@@ -42,7 +42,6 @@ const items: MenuItem[] = [
 const Sidebar = () => {
   const navigate = useNavigate();
   const onClick: MenuProps["onClick"] = (e) => {
-    console.log("click ", e);
     navigate(e.key);
   };
 

@@ -31,7 +31,7 @@ const App = () => {
             </div>
           </Content>
           <Footer style={{ textAlign: "center" }}>
-            Ant Design ©{new Date().getFullYear()} Created by Ant UED
+            Hospital Project ©{new Date().getFullYear()}
           </Footer>
         </Layout>
       </Layout>
