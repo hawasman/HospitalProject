@@ -94,7 +94,7 @@ const PatientsPage = () => {
       dataIndex: "activeField",
       key: "activeField",
       ellipsis: true,
-      render: (value: boolean) => (value == true ? "نشط" : "غير نشط"),
+      render: (value: boolean) => (value ? "نشط" : "غير نشط"),
     },
     {
       title: "",

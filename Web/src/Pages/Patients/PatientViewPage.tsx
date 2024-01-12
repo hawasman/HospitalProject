@@ -1,110 +1,52 @@
-import { Descriptions, DescriptionsProps } from "antd";
+import { Divider } from "antd";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Patient } from "../../interfaces";
+import { MedicalFile, Patient } from "../../interfaces";
 import axios from "axios";
-import moment from "moment";
-import { SocialState } from "../../Utils/Enums";
+import MedicalFileView from "../../components/MedicalFileView";
+import PatientDescription from "../../components/PatientDescription";
 
 const PatientViewPage = () => {
   const { id } = useParams();
   const [patient, setPatient] = useState<Patient>();
+  const [patientFile, setPatientFile] = useState<MedicalFile>();
 
   useEffect(() => {
     axios
       .get(`https://localhost:7197/api/Patients/${id}`)
       .then((res) => setPatient(res.data));
-  }, [id]);
-
-  const items: DescriptionsProps["items"] = [
-    {
-      key: "1",
-      label: "اسم المريض",
-      children: patient?.fullNameArabic,
-    },
-    {
-      key: "2",
-      label: "تاريخ الميلاد",
-      children: moment(patient?.birthDate).format("DD-MM-YYYY"),
-    },
-    {
-      key: "3",
-      label: "الجنسية",
-      children: patient?.nationality,
-    },
-    {
-      key: "4",
-      label: "Patient Name",
-      children: patient?.fullNameEnglish,
-    },
-    {
-      key: "5",
-      label: "العنوان",
-      children: patient?.contactInfo?.address,
-    },
-    {
-      key: "6",
-      label: "المدينة",
-      children: patient?.contactInfo?.city,
-    },
-    {
-      key: "7",
-      label: "الجنس",
-      children: patient?.gender == "0" ? "ذكر" : "انثى",
-    },
-    {
-      key: "8",
-      label: "الحالة الاجتماعية",
-      children: SocialState[ patient?.socialState ?? 0],
-    },
-    {
-      key: "9",
-      label: "الديانة",
-      children: patient?.religion,
-    },
-    {
-      key: "10",
-      label: "رقم الهوية",
-      children: patient?.nationalId,
-    },
-    {
-      key: "11",
-      label: "الوظيفة",
-      children: patient?.job,
-    },
-    {
-      key: "12",
-      label: "رقم الهاتف",
-      children: patient?.contactInfo?.phone1,
-    },
-    {
-      key: "13",
-      label: "رقم الهاتف 2",
-      children: patient?.contactInfo?.phone2 ?? "لا يوجد",
-    },
-    {
-      key: "14",
-      label: "المحمول",
-      children: patient?.contactInfo?.mobilePhone ?? "لا يوجد",
-    },
-    {
-      key: "15",
-      label: "البريد الالكتروني",
-      children: patient?.contactInfo?.email ?? "لا يوجد",
-    },
-  ];
+    setPatientFile({
+      id: 1,
+      updatedAt: "string",
+      createdAt: "string",
+      userId: 1,
+      activeField: true,
+      patientId: patient!.id,
+      patient: patient!,
+      bloodType: "B+",
+      bloodPressure: "90",
+      heatDgree: 32,
+      pulseRate: 23,
+      sugarLevel: 44,
+      weight: 80,
+      hieght: 145,
+      allergies: [],
+      notes: "string",
+      treatmentHistory: undefined,
+    });
+  }, [id,patient]);
 
   return (
     <>
-      <Descriptions
-        title={`معلومات المريض: ${id} / ${
-          patient?.activeField == true ? "نشط" : "غير نشط"
-        }`}
-        bordered
-        column={{ xs: 1, sm: 2, md: 3, lg: 3, xl: 4, xxl: 4 }}
-        items={items}
-      />
-      ;
+      <Divider>{`معلومات المريض: ${id} / ${
+        patient?.activeField == true ? "نشط" : "غير نشط"
+      }`}</Divider>
+
+      <PatientDescription patient={patient!} />
+
+      <Divider>الملف الطبي</Divider>
+
+      <MedicalFileView patientFile={patientFile!} />
     </>
   );
 };

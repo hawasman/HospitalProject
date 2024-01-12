@@ -71,7 +71,7 @@ export interface Patient {
     userId: number
     activeField: boolean
     patientId: number
-    patient: string
+    patient: Patient
     bloodType: string
     bloodPressure: string
     heatDgree: number
@@ -81,7 +81,7 @@ export interface Patient {
     hieght: number
     allergies: string[]
     notes: string
-    treatmentHistory: TreatmentHistory[]
+    treatmentHistory?: TreatmentHistory[]
   }
   
   export interface TreatmentHistory {

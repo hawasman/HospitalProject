@@ -42,6 +42,26 @@ namespace Api.Controllers
             return medicalFile;
         }
 
+        [HttpGet("patient/{id}")]
+        public async Task<ActionResult<MedicalFile>> GetMedicalFileByPatientId(int id)
+        {
+            try
+            {
+                var medicalFile = await _context.MedicalFiles.FirstOrDefaultAsync(m => m.PatientId == id);
+                if (medicalFile == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(medicalFile);
+            }
+            catch (System.Exception)
+            {
+                return NotFound();
+            }
+
+        }
+
         // PUT: api/MedicalFiles/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
