@@ -1,9 +1,7 @@
-import { Descriptions, DescriptionsProps, Table, Tabs, TabsProps } from "antd";
-import { MedicalFile, TreatmentHistory } from "../interfaces";
-import { ColumnsType } from "antd/es/table";
-import moment from "moment";
-import { useQuery } from "@tanstack/react-query";
-import { getTreatmentByMedicalFileId } from "../Service/PatientService";
+import { Descriptions, DescriptionsProps, Tabs, TabsProps } from "antd";
+import { MedicalFile } from "../interfaces";
+import PatientTreatments from "./PatientTreatments";
+import PatientAttatchments from "./PatientAttatchments";
 
 type prop = {
   patientFile: MedicalFile;
@@ -11,11 +9,6 @@ type prop = {
 
 const MedicalFileView = ({ patientFile }: prop) => {
   const id = patientFile.id;
-
-  const treatmentQuery = useQuery({
-    queryKey: ["treatmentHistory", id],
-    queryFn: () => getTreatmentByMedicalFileId(id),
-  });
 
   const descriptionItems: DescriptionsProps["items"] = [
     {
@@ -60,35 +53,6 @@ const MedicalFileView = ({ patientFile }: prop) => {
     },
   ];
 
-  const columns: ColumnsType<TreatmentHistory> = [
-    {
-      title: "رقم الطبيب",
-      dataIndex: "doctorId",
-      key: "doctorId",
-    },
-    {
-      title: "رقم العيادة",
-      dataIndex: "clinicid",
-      key: "clinicid",
-    },
-    {
-      title: "الاعراض",
-      dataIndex: "symptoms",
-      key: "symptoms",
-    },
-    {
-      title: "النوع",
-      dataIndex: "type",
-      key: "type",
-    },
-    {
-      title: "التاريخ",
-      dataIndex: "createdAt",
-      key: "createdAt",
-      render: (e) => moment(e).format("DD-MM-YYYY"),
-    },
-  ];
-
   const items: TabsProps["items"] = [
     {
       key: "1",
@@ -98,20 +62,12 @@ const MedicalFileView = ({ patientFile }: prop) => {
     {
       key: "2",
       label: "التاريخ الطبي",
-      children: treatmentQuery.isError ? (
-        <h3 style={{ display: "block", textAlign: "center", padding: 70 }}>لا توجد بيانات</h3>
-      ) : (
-        <Table
-          columns={columns}
-          loading={treatmentQuery.isPending}
-          dataSource={treatmentQuery.data}
-        />
-      ),
+      children: <PatientTreatments id={id} />,
     },
     {
       key: "3",
       label: "المستندات",
-      children: <h3 style={{ display: "block", textAlign: "center", padding: 70 }}>لا توجد بيانات</h3>,
+      children:<PatientAttatchments />
     },
   ];
 
