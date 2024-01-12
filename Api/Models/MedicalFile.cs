@@ -13,7 +13,7 @@ public class MedicalFile : BaseModel
     public int SugarLevel { get; set; }
     public int Weight { get; set; }
     public int Hieght { get; set; }
-    public ICollection<string>? Allergies { get; set; }
+    public List<string>? Allergies { get; set; }
     public string? Notes { get; set; }
     public ICollection<TreatmentHistory>? TreatmentHistory { get; set; }
 }

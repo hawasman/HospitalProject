@@ -71,7 +71,7 @@ export interface Patient {
     userId: number
     activeField: boolean
     patientId: number
-    patient: Patient
+    patient?: Patient
     bloodType: string
     bloodPressure: string
     heatDgree: number

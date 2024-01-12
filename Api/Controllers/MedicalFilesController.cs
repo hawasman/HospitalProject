@@ -45,20 +45,15 @@ namespace Api.Controllers
         [HttpGet("patient/{id}")]
         public async Task<ActionResult<MedicalFile>> GetMedicalFileByPatientId(int id)
         {
-            try
-            {
-                var medicalFile = await _context.MedicalFiles.FirstOrDefaultAsync(m => m.PatientId == id);
-                if (medicalFile == null)
-                {
-                    return NotFound();
-                }
 
-                return Ok(medicalFile);
-            }
-            catch (System.Exception)
+            var medicalFile = await _context.MedicalFiles.FirstOrDefaultAsync(m => m.PatientId == id);
+            if (medicalFile == null)
             {
                 return NotFound();
             }
+
+            return Ok(medicalFile);
+
 
         }
 

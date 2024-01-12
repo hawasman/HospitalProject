@@ -1,52 +1,37 @@
-import { Divider } from "antd";
-import { useEffect, useState } from "react";
+import { Divider, Spin } from "antd";
 import { useParams } from "react-router-dom";
-import { MedicalFile, Patient } from "../../interfaces";
-import axios from "axios";
 import MedicalFileView from "../../components/MedicalFileView";
 import PatientDescription from "../../components/PatientDescription";
+import { useQuery } from "@tanstack/react-query";
+import {
+  getMedicalFileByPatientId,
+  getPatientbyId,
+} from "../../Service/PatientService";
 
 const PatientViewPage = () => {
   const { id } = useParams();
-  const [patient, setPatient] = useState<Patient>();
-  const [patientFile, setPatientFile] = useState<MedicalFile>();
-
-  useEffect(() => {
-    axios
-      .get(`https://localhost:7197/api/Patients/${id}`)
-      .then((res) => setPatient(res.data));
-    setPatientFile({
-      id: 1,
-      updatedAt: "string",
-      createdAt: "string",
-      userId: 1,
-      activeField: true,
-      patientId: patient!.id,
-      patient: patient!,
-      bloodType: "B+",
-      bloodPressure: "90",
-      heatDgree: 32,
-      pulseRate: 23,
-      sugarLevel: 44,
-      weight: 80,
-      hieght: 145,
-      allergies: [],
-      notes: "string",
-      treatmentHistory: undefined,
-    });
-  }, [id,patient]);
+  const patientQuery = useQuery({
+    queryKey: ["patient", id],
+    queryFn: () => getPatientbyId(parseInt(id!)),
+  });
+  const patientFileQuery = useQuery({
+    queryKey: ["patientFile", id],
+    queryFn: () => getMedicalFileByPatientId(parseInt(id!)),
+  });
 
   return (
     <>
       <Divider>{`معلومات المريض: ${id} / ${
-        patient?.activeField == true ? "نشط" : "غير نشط"
+        patientQuery.data?.activeField == true ? "نشط" : "غير نشط"
       }`}</Divider>
 
-      <PatientDescription patient={patient!} />
+      <PatientDescription patient={patientQuery.data!} />
 
       <Divider>الملف الطبي</Divider>
 
-      <MedicalFileView patientFile={patientFile!} />
+      { patientFileQuery.data ? <MedicalFileView patientFile={patientFileQuery.data!} /> : null}
+
+      <Spin spinning={patientQuery.isPending} fullscreen />
     </>
   );
 };

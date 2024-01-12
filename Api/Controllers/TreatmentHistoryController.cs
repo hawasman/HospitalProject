@@ -42,6 +42,19 @@ namespace Api.Controllers
             return treatmentHistory;
         }
 
+         [HttpGet("medicalFile/{id}")]
+        public async Task<ActionResult<List<TreatmentHistory>>> GetTreatmentHistoryByMedicalFileid(int id)
+        {
+            var treatmentHistory = await _context.TreatmentsHistory.Where(t => t.MedicalFileId == id).ToListAsync();
+
+            if (treatmentHistory == null)
+            {
+                return NotFound();
+            }
+
+            return treatmentHistory;
+        }
+
         // PUT: api/TreatmentHistory/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

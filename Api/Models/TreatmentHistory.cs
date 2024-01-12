@@ -8,11 +8,11 @@ public class TreatmentHistory : BaseModel
     public int DoctorId { get; set; }
     public int Clinicid { get; set; }
     public required string Symptoms { get; set; }
-    public ICollection<string>? Examinations { get; set; }
-    public ICollection<string>? Analysis { get; set; }
+    public List<string>? Examinations { get; set; }
+    public List<string>? Analysis { get; set; }
     public required string Diagnosis { get; set; }
-    public ICollection<string>? Treatment { get; set; }
-    public ICollection<string>? Services { get; set; }
+    public List<string>? Treatment { get; set; }
+    public List<string>? Services { get; set; }
 
     public int MedicalFileId { get; set; }
     public MedicalFile MedicalFile { get; set; } = null!;

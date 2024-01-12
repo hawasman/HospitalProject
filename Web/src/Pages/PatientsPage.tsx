@@ -1,22 +1,20 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { TableProps } from "antd";
 import { Button, Table, Tooltip } from "antd";
 import type { ColumnsType, SorterResult } from "antd/es/table/interface";
 import { InfoOutlined } from "@ant-design/icons";
 import { Patient } from "../interfaces";
 import moment from "moment";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Gender, SocialState } from "../Utils/Enums";
+import { useQuery } from "@tanstack/react-query";
+import { getPatients } from "../Service/PatientService";
 
 const PatientsPage = () => {
-  const [data, setData] = useState<Patient[]>([]);
-
-  useEffect(() => {
-    axios
-      .get<Patient[]>("https://localhost:7197/api/Patients")
-      .then((res) => setData(res.data));
-  }, []);
+  const { isPending, isError, data } = useQuery({
+    queryKey: ["patients"],
+    queryFn: getPatients,
+  });
 
   const [sortedInfo, setSortedInfo] = useState<SorterResult<Patient>>({});
 
@@ -117,11 +115,15 @@ const PatientsPage = () => {
     },
   ];
 
+  if (isError) {
+    return <span>حدث خطاء اثناء تحميل البيانات</span>;
+  }
+
   return (
     <>
       <h3>قائمة المرضى</h3>
       <br />
-      <Table columns={columns} dataSource={data} onChange={handleChange} />
+      <Table loading={isPending} columns={columns} dataSource={data} onChange={handleChange} />
     </>
   );
 };
