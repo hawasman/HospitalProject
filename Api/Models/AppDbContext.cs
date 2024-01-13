@@ -13,6 +13,7 @@ public partial class AppDbContext(DbContextOptions<AppDbContext> options) : DbCo
     public DbSet<Examination> Examinations { get; set; } = null!;
     public DbSet<ContactInfo> ContactInfos { get; set; } = null!;
     public DbSet<FinancialInfo> FinancialInfos { get; set; } = null!;
+    public DbSet<Tenant> Tenants { get; set; } = null!;
 
     protected override void OnConfiguring(DbContextOptionsBuilder options)
     {

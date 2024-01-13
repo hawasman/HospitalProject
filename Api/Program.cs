@@ -1,12 +1,18 @@
 using Api;
+using Api.Helpers;
+using Api.Middlewares;
+using Api.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddMultiTenant();
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -21,7 +27,14 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
+    app.UseSwagger(c =>
+    {
+        c.RouteTemplate = "swagger/{documentName}/swagger.json";
+        c.PreSerializeFilters.Add((swaggerDoc, httpReq) =>
+        {
+            swaggerDoc.Servers = [new OpenApiServer { Url = $"{httpReq.Scheme}://{httpReq.Host.Value}/default" }];
+        });
+    });
     app.UseSwaggerUI();
 }
 app.UseHttpsRedirection();
@@ -32,8 +45,14 @@ app.UseCors(x => x
     .SetIsOriginAllowed(origin => true) // allow any origin
     .AllowCredentials());
 
+app.UseMiddleware<TenancyMiddleware>();
+
+app.UseRouting();
+
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapGet("/tenantInfo", (ITenant tenant) => tenant);
 
 app.Run();
