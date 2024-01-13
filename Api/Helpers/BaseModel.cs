@@ -14,4 +14,5 @@ public class BaseModel
     public DateTime CreatedAt { get; set; } = DateTime.Now;
     public int UserId { get; set; }
     public bool ActiveField { get; set; } = true;
+    public int? TenantId { get; set; }
 }
