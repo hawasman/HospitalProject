@@ -71,7 +71,7 @@ namespace Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ContactInfos");
+                    b.ToTable("ContactInfos", (string)null);
 
                     b.HasData(
                         new
@@ -2534,7 +2534,7 @@ namespace Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FinancialInfos");
+                    b.ToTable("FinancialInfos", (string)null);
                 });
 
             modelBuilder.Entity("Api.Models.Attachment", b =>
@@ -2592,7 +2592,7 @@ namespace Api.Migrations
 
                     b.HasIndex("PatientId");
 
-                    b.ToTable("Attachments");
+                    b.ToTable("Attachments", (string)null);
                 });
 
             modelBuilder.Entity("Api.Models.Examination", b =>
@@ -2645,7 +2645,7 @@ namespace Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Examinations");
+                    b.ToTable("Examinations", (string)null);
                 });
 
             modelBuilder.Entity("Api.Models.MedicalFile", b =>
@@ -2709,7 +2709,7 @@ namespace Api.Migrations
                     b.HasIndex("PatientId")
                         .IsUnique();
 
-                    b.ToTable("MedicalFiles");
+                    b.ToTable("MedicalFiles", (string)null);
                 });
 
             modelBuilder.Entity("Api.Models.Patient", b =>
@@ -2780,7 +2780,7 @@ namespace Api.Migrations
 
                     b.HasIndex("FinancialInfoId");
 
-                    b.ToTable("Patients");
+                    b.ToTable("Patients", (string)null);
 
                     b.HasData(
                         new
@@ -6223,7 +6223,7 @@ namespace Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tenants");
+                    b.ToTable("Tenants", (string)null);
                 });
 
             modelBuilder.Entity("Api.Models.TreatmentHistory", b =>
@@ -6288,7 +6288,7 @@ namespace Api.Migrations
 
                     b.HasIndex("MedicalFileId");
 
-                    b.ToTable("TreatmentsHistory");
+                    b.ToTable("TreatmentsHistory", (string)null);
                 });
 
             modelBuilder.Entity("Api.Models.Attachment", b =>

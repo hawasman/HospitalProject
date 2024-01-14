@@ -23,10 +23,12 @@ public partial class AppDbContext(DbContextOptions<AppDbContext> options, ITenan
         
     }
     
+
+    //TODO: Fix Tenancy id update
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        modelBuilder.Entity<BaseModel>().HasQueryFilter(b => b.TenantId == _tenant.Id);
+        // modelBuilder.Entity<BaseModel>().HasQueryFilter(b => b.TenantId == _tenant.Id);
         FakeData.Init(100);
         modelBuilder.Entity<ContactInfo>().HasData(FakeData.ContactInfos);
         modelBuilder.Entity<Patient>().HasData(FakeData.Patients);
@@ -34,12 +36,12 @@ public partial class AppDbContext(DbContextOptions<AppDbContext> options, ITenan
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        foreach (var entity in ChangeTracker.Entries<BaseModel>())
-        {
-            if(entity.State == EntityState.Added){
-                entity.Entity.TenantId = _tenant.Id;
-            }
-        }
+        // foreach (var entity in ChangeTracker.Entries<BaseModel>())
+        // {
+        //     if(entity.State == EntityState.Added){
+        //         entity.Entity.TenantId = _tenant.Id;
+        //     }
+        // }
         return base.SaveChangesAsync(cancellationToken);
     }
 }

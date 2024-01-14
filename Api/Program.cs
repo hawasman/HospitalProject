@@ -2,6 +2,8 @@ using Api;
 using Api.Helpers;
 using Api.Middlewares;
 using Api.Models;
+using Api.Repositories;
+using Api.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -9,6 +11,8 @@ using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddTransient(typeof(EFRepository<>));
+builder.Services.AddTransient(typeof(EFService<>));
 
 builder.Services.AddMultiTenant();
 builder.Services.AddControllers();

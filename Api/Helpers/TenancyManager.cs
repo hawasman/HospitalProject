@@ -1,7 +1,5 @@
 using Api.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.Identity.Client;
 
 namespace Api.Helpers;
 
