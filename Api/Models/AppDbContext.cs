@@ -1,6 +1,8 @@
+using System.Linq.Expressions;
 using Api.Helpers;
 using Api.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace Api;
 
@@ -20,28 +22,30 @@ public partial class AppDbContext(DbContextOptions<AppDbContext> options, ITenan
     protected override void OnConfiguring(DbContextOptionsBuilder options)
     {
         options.EnableSensitiveDataLogging();
-        
-    }
-    
 
-    //TODO: Fix Tenancy id update
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        // modelBuilder.Entity<BaseModel>().HasQueryFilter(b => b.TenantId == _tenant.Id);
+        // define your filter expression tree
+        Expression<Func<BaseModel, bool>> filterExpr = b => b.TenantId == _tenant.Id;
+        foreach (var mutableEntityType in modelBuilder.Model.GetEntityTypes())
+        {
+            // check if current entity type is child of BaseModel
+            if (mutableEntityType.ClrType.IsAssignableTo(typeof(BaseModel)))
+            {
+                // modify expression to handle correct child type
+                var parameter = Expression.Parameter(mutableEntityType.ClrType);
+                var body = ReplacingExpressionVisitor.Replace(filterExpr.Parameters.First(), parameter, filterExpr.Body);
+                var lambdaExpression = Expression.Lambda(body, parameter);
+
+                // set filter
+                mutableEntityType.SetQueryFilter(lambdaExpression);
+            }
+        }
         FakeData.Init(100);
         modelBuilder.Entity<ContactInfo>().HasData(FakeData.ContactInfos);
         modelBuilder.Entity<Patient>().HasData(FakeData.Patients);
-    }
-
-    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-    {
-        // foreach (var entity in ChangeTracker.Entries<BaseModel>())
-        // {
-        //     if(entity.State == EntityState.Added){
-        //         entity.Entity.TenantId = _tenant.Id;
-        //     }
-        // }
-        return base.SaveChangesAsync(cancellationToken);
     }
 }

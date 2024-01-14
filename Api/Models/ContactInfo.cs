@@ -1,4 +1,6 @@
-namespace Api.Helpers;
+using Api.Helpers;
+
+namespace Api.Models;
 
 public class ContactInfo : BaseModel
 {

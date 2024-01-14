@@ -47,7 +47,7 @@ public class BaseController<T> : ControllerBase, IBaseController<T> where T : Ba
     {
         entity = await _service.Create(entity);
 
-        return CreatedAtAction("New", entity);
+        return Ok(entity);
     }
 
     [HttpDelete]
