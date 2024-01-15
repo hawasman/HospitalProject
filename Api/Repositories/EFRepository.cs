@@ -64,4 +64,9 @@ public class EFRepository<T> : IEFRepository<T> where T : BaseModel
     {
         return await _DbSet.AnyAsync(x => x.Id == id);
     }
+
+    public IEnumerable<T> Where(Func<T, bool> func)
+    {
+        return _DbSet.Where(func);
+    }
 }

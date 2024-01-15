@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Api.Models;
 using Api.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api.Controllers
 {
@@ -8,6 +9,22 @@ namespace Api.Controllers
     [ApiController]
     public class MedicalFilesController(EFService<MedicalFile> service) : BaseController<MedicalFile>(service)
     {
+        private readonly EFService<MedicalFile> _service = service;
+
+        [HttpGet("patient/{id}")]
+        public ActionResult<MedicalFile> GetMedicalFileByPatientId(int id)
+        {
+
+            var medicalFile = _service.Where(m => m.PatientId == id).FirstOrDefault();
+            if (medicalFile == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(medicalFile);
+
+
+        }
     }
     
 }

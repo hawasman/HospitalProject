@@ -6,6 +6,7 @@ using Api.Repositories;
 using Api.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using OpenTelemetry.Metrics;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,10 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// builder.Services.AddOpenTelemetry().WithMetrics(opts => opts
+//         .AddAspNetCoreInstrumentation()
+// );
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(@"Host=localhost;Database=HPDB;Username=HPRoot;Password=1q2w3E*"));
