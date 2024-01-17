@@ -27,7 +27,7 @@ public class EFRepository<T> : IEFRepository<T> where T : BaseModel
 
     public async Task<IEnumerable<T>> GetAll()
     {
-        return await _DbSet.ToListAsync();
+        return await _DbSet.ToListAsync() ?? [];
     }
 
     public async Task<T?> GetById(int id)

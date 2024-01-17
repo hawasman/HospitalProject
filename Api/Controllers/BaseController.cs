@@ -27,6 +27,10 @@ public class BaseController<T> : ControllerBase, IBaseController<T> where T : Ba
     public async Task<ActionResult<IEnumerable<T>>> GetAll()
     {
         var entities = await _service.GetAll();
+        if (entities == null || !entities.Any())
+        {
+            return NotFound();
+        }
         return Ok(entities);
     }
 

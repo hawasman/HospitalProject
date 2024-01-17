@@ -2,7 +2,7 @@ using Api.Helpers;
 
 namespace Api.Models;
 
-public class MedicalFile : BaseModel
+public class MedicalFile : BaseModel, ITenantModel
 {
     public int PatientId { get; set; }
     public Patient Patient { get; set; } = null!;
@@ -16,4 +16,5 @@ public class MedicalFile : BaseModel
     public List<string>? Allergies { get; set; }
     public string? Notes { get; set; }
     public ICollection<TreatmentHistory>? TreatmentHistory { get; set; }
+    public string? TenantId { get; set; }
 }
