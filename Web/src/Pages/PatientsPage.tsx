@@ -1,14 +1,16 @@
 import { useState } from "react";
 import type { TableProps } from "antd";
-import { Button, Table, Tooltip } from "antd";
+import { Button, Modal, Table, Tooltip } from "antd";
 import type { ColumnsType, SorterResult } from "antd/es/table/interface";
-import { InfoOutlined } from "@ant-design/icons";
+import { InfoOutlined, PlusOutlined } from "@ant-design/icons";
 import { Patient } from "../interfaces";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import { Gender, SocialState } from "../Utils/Enums";
 import { useQuery } from "@tanstack/react-query";
 import { getPatients } from "../Service/PatientService";
+import PatientCreatePage from "./Patients/PatientCreatePage";
+import { useTranslation } from "react-i18next";
 
 const PatientsPage = () => {
   const { isPending, isError, data } = useQuery({
@@ -17,6 +19,8 @@ const PatientsPage = () => {
   });
 
   const [sortedInfo, setSortedInfo] = useState<SorterResult<Patient>>({});
+  const [isNew, setIsNew] = useState(false);
+  const { t } = useTranslation();
 
   const handleChange: TableProps<Patient>["onChange"] = (
     pagination,
@@ -35,7 +39,7 @@ const PatientsPage = () => {
 
   const columns: ColumnsType<Patient> = [
     {
-      title: "الاسم",
+      title: t("form.name"),
       dataIndex: "fullNameArabic",
       key: "fullNameArabic",
       sorter: (a, b) => a.fullNameArabic.length - b.fullNameArabic.length,
@@ -44,13 +48,14 @@ const PatientsPage = () => {
       ellipsis: true,
     },
     {
-      title: "الجنس",
+      title: t("form.gender"),
       dataIndex: "gender",
       key: "gender",
-      render: (value: Gender) => Gender[value],
+      render: (value: Gender) =>
+        Gender[value] == "ذكر" ? t("gender.male") : t("gender.female"),
     },
     {
-      title: "الجنسية",
+      title: t("form.nationality"),
       dataIndex: "nationality",
       key: "nationality",
       sorter: (a, b) => a.nationality.length - b.nationality.length,
@@ -59,7 +64,7 @@ const PatientsPage = () => {
       ellipsis: true,
     },
     {
-      title: "تاريخ الميلاد",
+      title: t("form.birthDate"),
       dataIndex: "birthDate",
       key: "birthDate",
       sorter: (a, b) => moment(a.birthDate).unix() - moment(b.birthDate).unix(),
@@ -68,18 +73,33 @@ const PatientsPage = () => {
       ellipsis: true,
     },
     {
-      title: "الحالة الاجتماعية",
+      title: t("form.socialState"),
       dataIndex: "socialState",
       key: "socialState",
-      render: (value) => SocialState[value],
+      render: (value) => {
+        switch (SocialState[value]) {
+          case "غير محدد":
+            return t("socialState.undefined");
+          case "متزوج":
+            return t("socialState.married");
+          case "اعزب":
+            return t("socialState.single");
+          case "مطلق":
+            return t("socialState.divorced");
+          case "ارملة":
+            return t("socialState.widow");
+          default:
+            return t("socialState.undefined");
+        }
+      },
     },
     {
-      title: "الديانة",
+      title: t("form.religion"),
       dataIndex: "religion",
       key: "religion",
     },
     {
-      title: "رقم الهوية",
+      title: t("form.nationalId"),
       dataIndex: "nationalId",
       key: "nationalId",
       sorter: (a, b) => a.nationalId.length - b.nationalId.length,
@@ -88,11 +108,12 @@ const PatientsPage = () => {
       ellipsis: true,
     },
     {
-      title: "حالة الحساب",
+      title: t("form.activeField"),
       dataIndex: "activeField",
       key: "activeField",
       ellipsis: true,
-      render: (value: boolean) => (value ? "نشط" : "غير نشط"),
+      render: (value: boolean) =>
+        value ? t("form.active") : t("form.notActive"),
     },
     {
       title: "",
@@ -101,10 +122,9 @@ const PatientsPage = () => {
       render: (value) => {
         return (
           <>
-            <Tooltip title="معلوات المريض">
+            <Tooltip title={t("form.patientInfo")}>
               <Button
                 onClick={() => handleView(value)}
-                type="primary"
                 shape="circle"
                 icon={<InfoOutlined />}
               />
@@ -121,9 +141,36 @@ const PatientsPage = () => {
 
   return (
     <>
-      <h3>قائمة المرضى</h3>
+      <Modal
+        title={t("form.newPatient")}
+        width="calc(100% - 500px)"
+        centered
+        open={isNew}
+        onOk={() => setIsNew(false)}
+        onCancel={() => setIsNew(false)}
+      >
+        <PatientCreatePage />
+      </Modal>
+      <div className="flex justify-between">
+        <h2>{t("patientList")}</h2>
+        <div>
+          <Tooltip title={t("form.newPatient")}>
+            <Button
+              className="btn"
+              onClick={() => setIsNew(true)}
+              type="default"
+              icon={<PlusOutlined />}
+            />
+          </Tooltip>
+        </div>
+      </div>
       <br />
-      <Table loading={isPending} columns={columns} dataSource={data} onChange={handleChange} />
+      <Table
+        loading={isPending}
+        columns={columns}
+        dataSource={data}
+        onChange={handleChange}
+      />
     </>
   );
 };

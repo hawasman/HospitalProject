@@ -1,15 +1,73 @@
 {
-    "app-name":"تطبيق ادارة مستشفيات",
-    "sidebar": {
-        "home": "الرئيسية",
-        "patients":"المرضى",
-        "patientList":"قائمة المرضى",
-        "finance":"المالية",
-        "report":"التقارير",
-        "settings":"الاعدادات"
-    },
-    "error": {
-        "oops":"!عفوا",
-        "sorry":"حدث خطاء غير متوقع"
-    }
+  "app-name": "تطبيق ادارة مستشفيات",
+  "patientList":"قائمة المرضى",
+  "search": "بحث",
+  "add": "اضافة",
+  "edit": "تعديل",
+  "delete": "حذف",
+  "save": "حفظ",
+  "cancel": "الغاء",
+  "close": "اغلاق",
+  "confirm": "تاكيد",
+  "reset": "اعادة تعيين",
+  "back": "الرجوع",
+  "sidebar": {
+    "home": "الرئيسية",
+    "patients": "المرضى",
+    "patientList": "قائمة المرضى",
+    "finance": "المالية",
+    "report": "التقارير",
+    "settings": "الاعدادات"
+  },
+  "error": {
+    "oops": "!عفوا",
+    "sorry": "حدث خطاء غير متوقع",
+    "required": "هذا الحقل مطلوب",
+    "invalid": "هذا الحقل غير صحيح",
+    "invalidEmail": "البريد الالكتروني غير صحيح",
+    "invalidPhone": "رقم الهاتف غير صحيح",
+    "invalidUrl": "الرابط غير صحيح",
+    "invalidDate": "تاريخ غير صحيح",
+    "invalidTime": "وقت غير صحيح",
+    "invalidDateTime": "تاريخ ووقت غير صحيح",
+    "invalidNumber": "رقم غير صحيح",
+    "invalidBoolean": "قيمة غير صحيحة",
+    "invalidEnum": "قيمة غير صحيحة"
+  },
+  "form": {
+    "newPatient": "مريض جديد",
+    "patientInfo": "معلومات المريض",
+    "fullNameArabic": "الاسم باللغة العربية",
+    "fullNameEnglish": "الاسم باللغة الانجليزية",
+    "email": "البريد الالكتروني",
+    "phone1": "رقم الهاتف 1",
+    "phone2": "رقم الهاتف 2",
+    "mobilePhone": "رقم الجوال",
+    "birthDate": "تاريخ الميلاد",
+    "gender": "الجنس",
+    "socialState": "الحالة الاجتماعية",
+    "address": "العنوان",
+    "nationality": "الجنسية",
+    "notes": "ملاحظات",
+    "religion": "الديانة",
+    "job": "الوظيفة",
+    "nationalId": "رقم الهوية",
+    "city": "المدينة",
+    "contactInfo": "معلومات التواصل",
+    "name": "الاسم",
+    "activeField":"حالة الحساب",
+    "active": "نشط",
+    "notActive": "غير نشط"
+  },
+  "gender":{
+    "male":"ذكر",
+    "female":"انثى"
+  },
+  "socialState":{
+    "undefined":"غير محدد",
+    "single":"اعزب",
+    "married":"متزوج",
+    "divorced":"مطلق",
+    "widow":"ارملة"
+  }
 }

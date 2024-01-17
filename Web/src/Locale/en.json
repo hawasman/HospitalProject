@@ -1,5 +1,6 @@
 {
     "app-name":"Hospital Project",
+    "patientList":"Patient List",
     "sidebar": {
         "home": "Home",
         "patients": "Patients",
@@ -11,5 +12,41 @@
     "error": {
         "oops":"Oops!",
         "sorry":"Sorry, an unexpected error has occurred."
+    },
+    "form": {
+        "newPatient": "New Patient",
+        "patientInfo": "Patient Info",
+        "fullNameArabic": "Full Name Arabic",
+        "fullNameEnglish": "Full Name English",
+        "email": "Email",
+        "phone1": "Phone 1",
+        "phone2": "Phone 2",
+        "mobilePhone": "Mobile Phone",
+        "birthDate": "Birth Date",
+        "gender": "Gender",
+        "socialState": "Social State",
+        "address": "Address",
+        "nationality": "Nationality",
+        "notes": "Notes",
+        "religion": "Religion",
+        "job": "Job",
+        "nationalId": "National Id",
+        "city": "City",
+        "contactInfo": "Contact Info",
+        "name": "Name",
+        "activeField": "Account State",
+        "active": "Active",
+        "notActive": "Not Active"
+    },
+    "gender":{
+        "male":"Male",
+        "female":"Female"
+    },
+    "socialState":{
+        "undefined":"Undefined",
+        "single":"Single",
+        "married":"Married",
+        "divorced":"Divorced",
+        "widow":"Widow"
     }
 }
