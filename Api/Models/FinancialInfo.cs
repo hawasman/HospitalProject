@@ -2,7 +2,7 @@ using Api.Helpers;
 
 namespace Api.Models;
 
-public class FinancialInfo : BaseModel
+public class FinancialInfo : BaseModel, ITenantModel
 {
     public required string PatientType { get; set; }
     public string? CompanyNo { get; set; }
@@ -14,4 +14,5 @@ public class FinancialInfo : BaseModel
     public string? Notes { get; set; }
     public double InitialCredit { get; set; }
     public double CurrenctCredit { get; set; }
+    public string? TenantId { get; set; }
 }

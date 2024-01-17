@@ -2,7 +2,7 @@ using Api.Helpers;
 
 namespace Api.Models;
 
-public class Patient : BaseModel
+public class Patient : BaseModel,  ITenantModel
 {
     public string? FullNameEnglish { get; set; }
     public required string FullNameArabic { get; set; }
@@ -19,5 +19,6 @@ public class Patient : BaseModel
     public FinancialInfo? FinancialInfo { get; set; }
     public ICollection<Attachment>? Attachments { get; set; }
     public MedicalFile? MedicalFile { get; set; }
+    public string? TenantId { get; set; }
 
 }

@@ -26,11 +26,11 @@ public class TenancyManager : ITenancyManager
             {
                 Id = 0,
                 ActiveField = true,
-                CompanyCode = "Main",
+                TID = "Main",
                 CompanyName = "Project",
                 CreatedAt = DateTime.Now,
                 OwnerId = 0,
-                TenantId = 0,
+                TenantId = "0",
                 UserId = 0
             };
         }
