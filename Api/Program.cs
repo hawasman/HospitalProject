@@ -21,12 +21,15 @@ builder.Services.AddAndMigrateTenantDatabases(builder.Configuration);
 
 builder.Services.AddControllers();
 
+builder.Services.AddAuthorization();
+builder.Services.AddAuthorizationBuilder();
+builder.Services.AddIdentityApiEndpoints<AppUser>()
+    .AddEntityFrameworkStores<AppDbContext>();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-// builder.Services.AddOpenTelemetry().WithMetrics(opts => opts
-//         .AddAspNetCoreInstrumentation()
-// );
+
 
 var app = builder.Build();
 
@@ -49,6 +52,7 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+app.MapIdentityApi<AppUser>();
 app.MapControllers();
 
 app.Run();

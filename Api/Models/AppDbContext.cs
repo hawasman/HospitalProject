@@ -2,12 +2,13 @@ using System.Linq.Expressions;
 using Api.Helpers;
 using Api.Models;
 using Api.Services;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 
 namespace Api;
 
-public partial class AppDbContext : DbContext
+public partial class AppDbContext : IdentityDbContext<AppUser>
 {
     private readonly ITenant _tenant;
     private readonly ITenantService _tenantService;

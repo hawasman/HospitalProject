@@ -12,7 +12,7 @@ public static class ServiceCollectionExtensions
         var defaultDbProvider = options.Defaults?.DBProvider;
         if (defaultDbProvider?.ToLower() == "postegresql")
         {
-            services.AddDbContext<AppDbContext>(m => m.UseNpgsql("Host=localhost;Database=HPDB;Username=HPRoot;Password=1q2w3E*"));
+            services.AddDbContext<AppDbContext>(m => m.UseNpgsql(defaultConnectionString));
         }
 
         var tenants = options.Tenants;
