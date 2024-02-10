@@ -36,7 +36,13 @@
         "name": "Name",
         "activeField": "Account State",
         "active": "Active",
-        "notActive": "Not Active"
+        "notActive": "Not Active",
+        "login":"Login",
+        "password": "Password",
+        "id": "Account Id",
+        "logout":"Logout",
+        "filterName": "Filter Name..."
+
     },
     "gender":{
         "male":"Male",

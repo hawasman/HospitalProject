@@ -57,7 +57,12 @@
     "name": "الاسم",
     "activeField":"حالة الحساب",
     "active": "نشط",
-    "notActive": "غير نشط"
+    "notActive": "غير نشط",
+    "login":"تسجيل دخول",
+    "password": "كلمة المرور",
+    "id": "رقم الحساب",
+    "logout":"تسجيل خروج",
+    "filterName": "البحث بالاسم..."
   },
   "gender":{
     "male":"ذكر",

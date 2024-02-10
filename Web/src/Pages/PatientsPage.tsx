@@ -4,19 +4,23 @@ import { Button, Modal, Table, Tooltip } from "antd";
 import type { ColumnsType, SorterResult } from "antd/es/table/interface";
 import { InfoOutlined, PlusOutlined } from "@ant-design/icons";
 import { Patient } from "../interfaces";
-import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import { Gender, SocialState } from "../Utils/Enums";
 import { useQuery } from "@tanstack/react-query";
 import { getPatients } from "../Service/PatientService";
 import PatientCreatePage from "./Patients/PatientCreatePage";
 import { useTranslation } from "react-i18next";
+import { DataTable } from "@/components/DataTable/data-table";
+import { patientColumns } from "@/components/DataTable/columns";
+import moment from 'moment';
 
 const PatientsPage = () => {
   const { isPending, isError, data } = useQuery({
     queryKey: ["patients"],
     queryFn: getPatients,
+    initialData: []
   });
+  const navigate = useNavigate();
 
   const [sortedInfo, setSortedInfo] = useState<SorterResult<Patient>>({});
   const [isNew, setIsNew] = useState(false);
@@ -35,7 +39,6 @@ const PatientsPage = () => {
     navigate(`${id}`);
   };
 
-  const navigate = useNavigate();
 
   const columns: ColumnsType<Patient> = [
     {
@@ -165,12 +168,13 @@ const PatientsPage = () => {
         </div>
       </div>
       <br />
-      <Table
+      {/* <Table
         loading={isPending}
         columns={columns}
         dataSource={data}
         onChange={handleChange}
-      />
+      /> */}
+      <DataTable columns={patientColumns} data={data} />
     </>
   );
 };

@@ -23,16 +23,23 @@ public class TenantService : ITenantService
         _httpContext = contextAccessor.HttpContext;
         if (_httpContext != null)
         {
-            if (_httpContext.Request.Headers.TryGetValue("tenant", out var tenantId))
+            var path = _httpContext.Request.Path.Value;
+
+            if (path?.Split("/")[0] == "api")
             {
-                if (!string.IsNullOrEmpty(tenantId))
+                if (_httpContext.Request.Headers.TryGetValue("tenant", out var tenantId))
                 {
-                    SetTenant(tenantId!);
+                    if (!string.IsNullOrEmpty(tenantId))
+                    {
+                        SetTenant(tenantId!);
+                    }
                 }
-            }
-            else
-            {
-                Console.WriteLine("Invalid Tenant!");
+                else
+                {
+                    Console.WriteLine("Invalid Tenant!");
+                }
+            }else{
+                SetTenant("root");
             }
         }
     }

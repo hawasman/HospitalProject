@@ -1,9 +1,9 @@
 import { MedicalFile, Patient, TreatmentHistory } from "../interfaces";
 import { axiosInstance } from "./Apis";
 
-const patientsURL = "/Patients";
-const medicalFileURL = "/MedicalFiles";
-const treatmentHistoryURL = "/TreatmentHistory";
+const patientsURL = "/api/Patients";
+const medicalFileURL = "/api/MedicalFiles";
+const treatmentHistoryURL = "/api/TreatmentHistory";
 
 //region Patient
 

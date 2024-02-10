@@ -1,17 +1,20 @@
 import { Button, ConfigProvider, Flex, Layout, theme } from "antd";
 import Sidebar from "./components/Sidebar";
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet, useNavigate } from "react-router-dom";
 import type { Locale } from "antd/es/locale";
 import enUS from "antd/locale/en_US";
 import ar_EG from "antd/locale/ar_EG";
 import { useState } from "react";
 import { DirectionType } from "antd/es/config-provider";
-import './Locale/i18n';
+import "./Locale/i18n";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "./Service/AuthService";
 
 const { Header, Content, Footer } = Layout;
 
 const App = () => {
+  const { token, clearToken } = useAuth();
+  const navigate = useNavigate();
   const [locale, setLocale] = useState<Locale>(ar_EG);
   const [direction, setDirection] = useState<DirectionType>("rtl");
   const { t, i18n } = useTranslation();
@@ -42,6 +45,17 @@ const App = () => {
     borderRadius: borderRadiusLG,
   };
 
+  const handleLogin = async () => {
+    if (token) {
+      clearToken();
+      navigate("/", { replace: true });
+    }
+  }
+
+  if (!token) {
+    // If not authenticated, redirect to the login page
+    return <Navigate to="/signin" />;
+  }
   return (
     <>
       <ConfigProvider direction={direction} locale={locale}>
@@ -54,6 +68,9 @@ const App = () => {
                 <div>
                   <Button type="text" onClick={changeLocale}>
                     {locale == ar_EG ? "English" : "عربي"}
+                  </Button>
+                  <Button type="text" onClick={handleLogin}>
+                    {token? t("form.logout") : t("form.login")}
                   </Button>
                 </div>
               </Flex>
