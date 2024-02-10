@@ -123,3 +123,11 @@ export interface IAuth {
   logout: () => void;
   isAuth: boolean;
 }
+
+export interface User {
+  id: string
+  tenantId: string
+  userName: string
+  email: string
+  phoneNumber: number
+}

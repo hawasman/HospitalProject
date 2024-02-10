@@ -19,7 +19,7 @@ const LoginPage = () => {
 
   const onSubmit = async (data: FieldValues) => {
     const user: AppUser = { email: data.email, password: data.password };
-    await login(user).then((res) => {
+    await login(user).then(async (res) => {
       if (!res) {
         return;
       }

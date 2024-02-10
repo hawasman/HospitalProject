@@ -1,9 +1,12 @@
+using System.Security.Claims;
 using Api;
 using Api.Infrastructure.Extensions;
 using Api.Infrastructure.Settings;
 using Api.Models;
 using Api.Repositories;
 using Api.Services;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.OpenApi.Models;
 
 
@@ -53,6 +56,16 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapIdentityApi<AppUser>();
+
+app.MapGet("/user", async (HttpContext context, UserManager<AppUser> userManager) => {
+   var user = await userManager.GetUserAsync(context.User);
+   if(user == null){
+        return Results.NotFound();
+   }
+   
+   return Results.Ok(UserMapper.ToDto(user));
+}).RequireAuthorization();
+
 app.MapControllers();
 
 app.Run();

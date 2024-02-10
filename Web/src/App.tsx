@@ -8,12 +8,12 @@ import { useState } from "react";
 import { DirectionType } from "antd/es/config-provider";
 import "./Locale/i18n";
 import { useTranslation } from "react-i18next";
-import { useAuth } from "./Service/AuthService";
+import { getUser, useAuth } from "./Service/AuthService";
 
 const { Header, Content, Footer } = Layout;
 
 const App = () => {
-  const { token, clearToken } = useAuth();
+  const { token, clearToken, user, setUser } = useAuth();
   const navigate = useNavigate();
   const [locale, setLocale] = useState<Locale>(ar_EG);
   const [direction, setDirection] = useState<DirectionType>("rtl");
@@ -50,6 +50,15 @@ const App = () => {
       clearToken();
       navigate("/", { replace: true });
     }
+  };
+
+  if (token && !user) {
+    getUser().then((res) => {
+      if (!res) {
+        return;
+      }
+      setUser(JSON.stringify(res.data));
+    });
   }
 
   if (!token) {
@@ -70,7 +79,7 @@ const App = () => {
                     {locale == ar_EG ? "English" : "عربي"}
                   </Button>
                   <Button type="text" onClick={handleLogin}>
-                    {token? t("form.logout") : t("form.login")}
+                    {token ? t("form.logout") : t("form.login")}
                   </Button>
                 </div>
               </Flex>
