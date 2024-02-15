@@ -4,7 +4,6 @@ import MedicalFileView from "../../components/MedicalFileView";
 import PatientDescription from "../../components/PatientDescription";
 import { useQuery } from "@tanstack/react-query";
 import {
-  getMedicalFileByPatientId,
   getPatientbyId,
 } from "../../Service/PatientService";
 
@@ -14,10 +13,10 @@ const PatientViewPage = () => {
     queryKey: ["patient", id],
     queryFn: () => getPatientbyId(parseInt(id!)),
   });
-  const patientFileQuery = useQuery({
-    queryKey: ["patientFile", id],
-    queryFn: () => getMedicalFileByPatientId(parseInt(id!)),
-  });
+  // const patientFileQuery = useQuery({
+  //   queryKey: ["patientFile", id],
+  //   queryFn: () => getMedicalFileByPatientId(parseInt(id!)),
+  // });
 
   return (
     <>
@@ -29,7 +28,7 @@ const PatientViewPage = () => {
 
       <Divider>الملف الطبي</Divider>
 
-      { patientFileQuery.data ? <MedicalFileView patientFile={patientFileQuery.data!} /> : null}
+      { patientQuery.data?.medicalFile ? <MedicalFileView patientFile={patientQuery.data?.medicalFile} /> : null}
 
       <Spin spinning={patientQuery.isPending} fullscreen />
     </>

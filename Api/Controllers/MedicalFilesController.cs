@@ -9,8 +9,6 @@ namespace Api.Controllers
     [ApiController]
     public class MedicalFilesController(EFService<MedicalFile> service) : BaseController<MedicalFile>(service)
     {
-        private readonly EFService<MedicalFile> _service = service;
-
         [HttpGet("patient/{id}")]
         public ActionResult<MedicalFile> GetMedicalFileByPatientId(int id)
         {
@@ -26,5 +24,5 @@ namespace Api.Controllers
 
         }
     }
-    
+
 }

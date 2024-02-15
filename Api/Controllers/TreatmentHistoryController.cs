@@ -8,14 +8,12 @@ namespace Api.Controllers
     [ApiController]
     public class TreatmentHistoryController(EFService<TreatmentHistory> service) : BaseController<TreatmentHistory>(service)
     {
-        private readonly EFService<TreatmentHistory> _service = service;
-
         [HttpGet("medicalFile/{id}")]
         public ActionResult<List<TreatmentHistory>> GetByMedicalFileId(int id)
         {
             var treatments = _service.Where(t => t.MedicalFileId == id).ToList();
 
-            if (!treatments.Any())
+            if (treatments.Count == 0)
             {
                 return NotFound();
             }

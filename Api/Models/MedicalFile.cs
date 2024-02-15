@@ -5,7 +5,6 @@ namespace Api.Models;
 public class MedicalFile : BaseModel, ITenantModel
 {
     public int PatientId { get; set; }
-    public Patient Patient { get; set; } = null!;
     public required string BloodType { get; set; }
     public string? BloodPressure { get; set; }
     public double HeatDgree { get; set; }
