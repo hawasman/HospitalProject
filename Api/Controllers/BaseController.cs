@@ -16,7 +16,7 @@ public interface IBaseController<T>
 public class BaseController<T> : ControllerBase, IBaseController<T> where T : BaseModel
 {
 
-    private readonly EFService<T> _service;
+    protected readonly EFService<T> _service;
 
     public BaseController(EFService<T> service)
     {
@@ -35,7 +35,7 @@ public class BaseController<T> : ControllerBase, IBaseController<T> where T : Ba
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<T?>> GetById(int id)
+    public virtual async Task<ActionResult<T?>> GetById(int id)
     {
         var entity = await _service.GetById(id);
         if (entity == null)
@@ -47,7 +47,7 @@ public class BaseController<T> : ControllerBase, IBaseController<T> where T : Ba
     }
 
     [HttpPost]
-    public async Task<ActionResult<T>> Create(T entity)
+    public virtual async Task<ActionResult<T>> Create(T entity)
     {
         entity = await _service.Create(entity);
 

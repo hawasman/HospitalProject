@@ -1,14 +1,14 @@
 export interface Patient {
-  id: number;
+  id?: number;
   updatedAt?: Date;
   createdAt?: Date;
   userId?: number;
-  activeField: boolean;
+  activeField?: boolean;
   fullNameEnglish?: string;
   fullNameArabic: string;
   birthDate: Date;
   nationality: string;
-  gender: string;
+  gender: number;
   socialState: number;
   religion: string;
   nationalId: string;
@@ -20,11 +20,11 @@ export interface Patient {
 }
 
 export interface ContactInfo {
-  id: number;
-  updatedAt: string;
-  createdAt: string;
-  userId: number;
-  activeField: boolean;
+  id?: number;
+  updatedA?: string;
+  createdAt?: string;
+  userId?: number;
+  activeField?: boolean;
   phone1: string;
   phone2: string;
   mobilePhone: string;

@@ -41,7 +41,8 @@
         "password": "Password",
         "id": "Account Id",
         "logout":"Logout",
-        "filterName": "Filter Name..."
+        "filterName": "Filter Name...",
+        "submit": "Submit"
 
     },
     "gender":{

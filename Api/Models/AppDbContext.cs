@@ -63,6 +63,7 @@ public partial class AppDbContext : IdentityDbContext<AppUser>
                 mutableEntityType.SetQueryFilter(lambdaExpression);
             }
         }
+
         FakeData.Init(100);
         modelBuilder.Entity<ContactInfo>().HasData(FakeData.ContactInfos);
         modelBuilder.Entity<Patient>().HasData(FakeData.Patients);
